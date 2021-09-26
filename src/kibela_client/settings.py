@@ -1,8 +1,8 @@
 from pydantic import BaseSettings
 
 class Settings(BaseSettings):
-    kibela_team: str
-    kibela_access_token: str
+    kibela_team: str = "my"
+    kibela_access_token: str = "ACCESS_TOKEN"
 
     class Config:
         env_file = ".env"
