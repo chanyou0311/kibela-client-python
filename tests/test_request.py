@@ -1,16 +1,6 @@
 import pytest
 from kibela_client import KibelaClient
-from kibela_client.settings import Settings
 from graphql.error import GraphQLSyntaxError
-
-
-@pytest.fixture
-def settings():
-    return Settings()
-
-@pytest.fixture
-def client(settings: Settings):
-    return KibelaClient(team=settings.kibela_team, access_token=settings.kibela_access_token)
 
 
 @pytest.mark.vcr()
