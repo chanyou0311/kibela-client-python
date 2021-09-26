@@ -7,10 +7,13 @@ from kibela_client.settings import Settings
 def settings():
     return Settings()
 
+@pytest.fixture
+def client(settings: Settings):
+    return KibelaClient(team=settings.kibela_team, access_token=settings.kibela_access_token)
+
 
 @pytest.mark.vcr()
-def test_request(settings: Settings):
-    client = KibelaClient(team=settings.kibela_team, access_token=settings.kibela_access_token)
+def test_get_response(client: KibelaClient):
     query = """
     query {
         currentUser {
