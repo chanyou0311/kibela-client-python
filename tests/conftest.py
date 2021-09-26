@@ -10,7 +10,7 @@ from kibela_client import KibelaClient
 from kibela_client.settings import Settings
 
 
-kibela_team_pattern = re.compile(r"(https?://)\w+(\.kibe.la/api/v1)")
+kibela_team_pattern = re.compile(r"(https?://)[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*(\.kibe\.la/?)")
 
 
 def filter_url(url: str) -> str:
@@ -29,7 +29,9 @@ def filter_response(response: Dict):
         except json.JSONDecodeError:
             pass
         else:
-            response["body"]["string"] = json.dumps(content, separators=(",", ":")).encode()
+            dumped_content = json.dumps(content, separators=(",", ":"))
+            # mask Kibela team
+            response["body"]["string"] = filter_url(dumped_content).encode()
     return response
 
 
